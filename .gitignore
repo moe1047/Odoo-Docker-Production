@@ -1,0 +1,28 @@
+# Secrets & local config
+.env
+.setup-secrets
+config/odoo.conf
+config/odoo.dev.conf
+
+# TLS (never commit private keys)
+certs/*.key
+certs/*.pem
+
+# Your code & enterprise addons (bring your own)
+addons/*
+!addons/.gitkeep
+ent/*
+!ent/.gitkeep
+
+# Data & runtime
+*.log
+*.dump
+*.sql
+*.zip
+backups/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp

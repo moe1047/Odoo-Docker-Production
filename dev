@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Local dev — http://127.0.0.1:8069
+#   ./dev          → start
+#   ./dev down     → stop
+#   ./dev logs -f web
+set -euo pipefail
+cd "$(dirname "$0")"
+if [[ $# -eq 0 ]]; then
+  set -- up --build
+fi
+exec docker compose -f docker-compose.yml -f docker-compose.dev.yml "$@"

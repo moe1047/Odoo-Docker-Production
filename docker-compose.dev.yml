@@ -1,0 +1,18 @@
+# Local development override — merge with docker-compose.yml
+#   make dev   (foreground — logs in terminal; Ctrl+C to stop)
+#
+# - Odoo on http://127.0.0.1:8069 (no Apache / no TLS)
+# - Single-process mode (workers = 0) via config/odoo.dev.conf
+# - Apache is NOT started (production profile not enabled)
+
+services:
+  web:
+    networks:
+      - odoo
+    ports:
+      - "127.0.0.1:8069:8069"
+    volumes:
+      - ./config/odoo.dev.conf:/etc/odoo/odoo.conf:ro
+    mem_limit: 4g
+    healthcheck:
+      start_period: 60s

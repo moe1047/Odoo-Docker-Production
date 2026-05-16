@@ -1,0 +1,36 @@
+[options]
+; Paths (match docker-compose volume mounts)
+addons_path = /usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons,/mnt/ent-addons
+
+; --- Security ---
+; Set automatically by make setup — protects /web/database/manager
+admin_passwd = run_make_setup_to_generate
+list_db = False
+dbfilter = ^mycompany$
+; Must match ODOO_DB_NAME in .env (regex anchor ^name$)
+
+; --- Reverse proxy (required when Apache/Nginx terminates TLS) ---
+proxy_mode = True
+
+; --- Performance (production) ---
+; Rule of thumb: workers = (CPU cores × 2) + 1  (cap by available RAM)
+; Default 4 fits most small teams (10–30 concurrent users on a 4–8 vCPU VPS)
+; For local dev use docker-compose.dev.yml (workers = 0) — never on public prod
+workers = 4
+max_cron_threads = 2
+
+; Each worker opens up to db_maxconn connections — keep:
+;   workers + max_cron_threads + 2  ×  db_maxconn  <  Postgres max_connections (100)
+db_maxconn = 8
+
+; Per-worker memory (bytes). Tune to your RAM:
+;   total ≈ workers × limit_memory_hard + 3 GB (Postgres + OS)
+limit_memory_soft = 1342177280
+limit_memory_hard = 1610612736
+
+limit_time_cpu = 600
+limit_time_real = 1800
+limit_request = 8192
+
+; Longpolling bus (when workers > 0)
+; longpolling_port = 8072

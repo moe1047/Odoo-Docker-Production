@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Production — HTTPS via Apache (enable profile)
+#   ./prod          → start
+#   ./prod down     → stop
+#   ./prod logs -f web
+set -euo pipefail
+cd "$(dirname "$0")"
+if [[ $# -eq 0 ]]; then
+  set -- --profile production up -d --build
+else
+  set -- --profile production "$@"
+fi
+exec docker compose "$@"

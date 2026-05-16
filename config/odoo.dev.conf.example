@@ -1,0 +1,16 @@
+[options]
+addons_path = /usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons,/mnt/ent-addons
+
+; --- Dev only (do not use on a public production server) ---
+admin_passwd = run_make_setup_to_generate
+list_db = True
+; proxy_mode off — you hit Odoo directly on port 8069
+proxy_mode = False
+
+; Single process: easier debugging, breakpoints, faster restarts
+workers = 0
+max_cron_threads = 1
+
+limit_time_cpu = 600
+limit_time_real = 3600
+limit_request = 8192

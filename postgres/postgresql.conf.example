@@ -1,0 +1,16 @@
+# Optional Postgres tuning for a ~12 GB RAM VPS with SSD.
+# To enable, add to docker-compose db service:
+#   volumes:
+#     - ./postgres/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+#   command: postgres -c config_file=/etc/postgresql/postgresql.conf
+
+max_connections = 100
+shared_buffers = 2GB
+effective_cache_size = 6GB
+work_mem = 12MB
+maintenance_work_mem = 512MB
+random_page_cost = 1.1
+effective_io_concurrency = 200
+checkpoint_completion_target = 0.9
+wal_buffers = 16MB
+default_statistics_target = 100
