@@ -54,6 +54,8 @@ User ──HTTPS──► Apache ──► Odoo (workers) ──► PostgreSQL  
 
 Dev runs in the **foreground** (logs in your terminal, **Ctrl+C** to stop). Production runs **detached** in the background.
 
+**Ports:** `make dev` → open **:8069** directly. `make prod` → **:80 / :443** (Apache) → Odoo **:8069** inside Docker (not on the host). No certs yet: `cp apache/vhosts/odoo.http-only.conf.example apache/vhosts/odoo.conf`
+
 ---
 
 ## 2. What goes in Git vs on the server

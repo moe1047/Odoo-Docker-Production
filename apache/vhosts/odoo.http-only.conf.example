@@ -1,0 +1,25 @@
+# Use BEFORE you have TLS certs (first deploy / local prod test).
+# Replace odoo.conf with this file, then make prod:
+#
+#   cp apache/vhosts/odoo.http-only.conf.example apache/vhosts/odoo.conf
+#   make prod
+#
+# Browser: http://your-server-ip  or  http://odoo.example.com
+# (port 80 → Odoo 8069 inside Docker)
+#
+# After certs are in certs/, switch back to the full odoo.conf (HTTP→HTTPS + 443 proxy).
+
+<VirtualHost *:80>
+    ServerName odoo.example.com
+
+    ProxyPreserveHost On
+    ProxyRequests Off
+    RequestHeader set X-Forwarded-Proto "http"
+    RequestHeader set X-Forwarded-For "%{REMOTE_ADDR}s"
+
+    ProxyPass        /websocket ws://web:8069/websocket retry=0 timeout=300
+    ProxyPassReverse /websocket ws://web:8069/websocket
+
+    ProxyPass        / http://web:8069/ retry=0 timeout=300
+    ProxyPassReverse / http://web:8069/
+</VirtualHost>
