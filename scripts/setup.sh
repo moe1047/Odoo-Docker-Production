@@ -41,10 +41,6 @@ POSTGRES_USER=odoo
 POSTGRES_PASSWORD=${db_pass}
 POSTGRES_DB=postgres
 
-HOST=db
-USER=odoo
-PASSWORD=${db_pass}
-
 ODOO_DB_NAME=${db_name}
 EOF
   chmod 600 .env
@@ -74,7 +70,7 @@ if [[ ! -f .env ]]; then
   DB_PASS="$(gen_secret)"
   write_env "$DB_PASS" "$ODOO_DB_NAME"
   CREATED+=(".env")
-  SECRETS_BODY+="Postgres + Odoo DB password (POSTGRES_PASSWORD / PASSWORD):
+  SECRETS_BODY+="Postgres + Odoo DB password (POSTGRES_PASSWORD):
   ${DB_PASS}
 
 "
