@@ -52,7 +52,19 @@ Then in `.env`: `BACKUP_ROOT=/var/backups/odoo`
 
 ---
 
-## Daily cron (VPS)
+## Auto backups (VPS)
+
+**Easiest:** one command installs a daily cron job (02:15 daily by default) that runs the same script as `make backup`:
+
+```bash
+# On the VPS, after make prod is running and .env has BACKUP_ROOT=/var/backups/odoo
+make backup-cron
+```
+
+Remove: `make backup-cron-remove`  
+Custom time: `BACKUP_CRON_SCHEDULE='0 3 * * *' make backup-cron`
+
+Manual cron (equivalent):
 
 ```cron
 15 2 * * * cd /opt/odoo && ./scripts/backup.sh >> /var/log/odoo-backup.log 2>&1

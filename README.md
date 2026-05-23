@@ -363,7 +363,7 @@ make backup
 # → backups/host/<timestamp>/db_<name>.dump + filestore_<name>.tar.gz
 ```
 
-Schedule daily cron on the VPS and **copy `backups/host/` off-server** (rsync, S3, etc.).
+Enable daily auto-backup on the VPS: `make backup-cron` (then **copy backups off-server** — rsync, S3, etc.).
 
 Full guide (cron, restore drill, optional Odoo backup module): **[docs/BACKUPS.md](docs/BACKUPS.md)**
 
@@ -414,6 +414,8 @@ make restart
 | `make ps` | Container status |
 | `make shell` | Bash inside production Odoo container |
 | `make backup` | DB dump + filestore → `backups/host/` |
+| `make backup-cron` | Install daily cron (VPS) — same as `make backup` |
+| `make backup-cron-remove` | Remove backup cron job |
 
 Shortcuts: `./dev`, `./prod` (same as above; `./dev down`, etc.)
 
@@ -454,7 +456,7 @@ Shortcuts: `./dev`, `./prod` (same as above; `./dev down`, etc.)
 - [ ] SSH keys only on VPS
 
 ### Recovery
-- [ ] `make backup` scheduled daily (see [docs/BACKUPS.md](docs/BACKUPS.md))
+- [ ] `make backup-cron` on VPS (see [docs/BACKUPS.md](docs/BACKUPS.md))
 - [ ] Backup copies stored off-server
 - [ ] Restore tested on staging
 
@@ -505,7 +507,8 @@ curl -k https://localhost/web/health   # on server
 ├── docs/BACKUPS.md           # host backup + restore
 └── scripts/
     ├── setup.sh
-    └── backup.sh             # make backup
+    ├── backup.sh             # make backup
+    └── install-backup-cron.sh # make backup-cron
 ```
 
 ---

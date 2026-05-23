@@ -1,5 +1,5 @@
 # Short commands — run from repo root:  make dev | make prod
-.PHONY: setup dev prod down down-dev logs logs-dev restart ps shell check-env backup
+.PHONY: setup dev prod down down-dev logs logs-dev restart ps shell check-env backup backup-cron backup-cron-remove
 
 check-env:
 	@test -f .env || (echo "Missing .env — run: make setup" && exit 1)
@@ -39,3 +39,12 @@ shell:
 backup:
 	@test -f .env || (echo "Missing .env — run: make setup" && exit 1)
 	./scripts/backup.sh
+
+backup-cron:
+	@test -f .env || (echo "Missing .env — run: make setup" && exit 1)
+	chmod +x scripts/install-backup-cron.sh
+	./scripts/install-backup-cron.sh
+
+backup-cron-remove:
+	@chmod +x scripts/install-backup-cron.sh
+	./scripts/install-backup-cron.sh --remove
